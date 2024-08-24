@@ -39,19 +39,23 @@ data = pd.DataFrame(sheet.get_all_records())
 columns = ["KEYWORD", "Belongs to", "Rank - 19th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 filtered_data = data[columns]
 
-# Streamlit app layout
+# Streamlit app layout with inline HTML
 st.markdown("""
     <style>
     .reportview-container {
-        background-color: #ffffff;  /* Background color */
+        background-color: #ffffff;
     }
     .markdown-text-container {
-        color: #000000;  /* Text color */
+        color: #000000;
     }
     .css-1aumxhk {
-        color: #000000;  /* Text color for Streamlit elements */
+        color: #000000;
     }
     </style>
+    <div style="color: black;">
+    <h1>Keyword Rankings Dashboard</h1>
+    <h3>Rankings for {selected_category or 'All Categories'}</h3>
+    </div>
     """, unsafe_allow_html=True)
 
 st.title("Keyword Rankings Dashboard")
