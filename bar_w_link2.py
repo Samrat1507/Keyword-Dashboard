@@ -74,10 +74,7 @@ for i, date in enumerate(dates):
                 x=data_to_use['KEYWORD'],
                 y=data_to_use[date],
                 name=date,
-                marker=dict(color=colors[i], opacity=1),
-                text=data_to_use[date],
-                textposition='inside',
-                textfont=dict(color='black')
+                marker=dict(color=colors[i], opacity=1)
             ))
         elif graph_type == 'Line':
             fig.add_trace(go.Scatter(
@@ -85,9 +82,7 @@ for i, date in enumerate(dates):
                 y=data_to_use[date],
                 mode='lines+markers',
                 name=date,
-                line=dict(color=colors[i]),
-                text=data_to_use[date],
-                textposition='top center'
+                line=dict(color=colors[i])
             ))
         elif graph_type == 'Scatter':
             fig.add_trace(go.Scatter(
@@ -95,9 +90,7 @@ for i, date in enumerate(dates):
                 y=data_to_use[date],
                 mode='markers',
                 name=date,
-                marker=dict(color=colors[i]),
-                text=data_to_use[date],
-                textposition='top center'
+                marker=dict(color=colors[i])
             ))
 
 fig.update_layout(
