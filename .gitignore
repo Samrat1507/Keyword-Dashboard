@@ -1,0 +1,20 @@
+# Python-related
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Environment variables
+.env
+# Credentials
+*.json  # Assuming credentials are stored in JSON files
+*.key
+
+# IDEs
+.vscode/
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+dashboard-432911-c930eac0416d.json
