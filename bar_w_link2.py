@@ -7,18 +7,27 @@ import plotly.graph_objects as go
 from oauth2client.service_account import ServiceAccountCredentials
 import streamlit as st
 import base64
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Google Sheets API setup
 scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
          "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
-# Get the path to the JSON file from the environment variable
-json_file_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
-creds = ServiceAccountCredentials.from_json_keyfile_name(json_file_path, scope)
+# Retrieve credentials from Streamlit secrets
+creds_dict = {
+    "type": st.secrets["gcp"]["type"],
+    "project_id": st.secrets["gcp"]["project_id"],
+    "private_key_id": st.secrets["gcp"]["private_key_id"],
+    "private_key": st.secrets["gcp"]["private_key"].replace("\\n", "\n"),  # Replace escaped newlines with actual newlines
+    "client_email": st.secrets["gcp"]["client_email"],
+    "client_id": st.secrets["gcp"]["client_id"],
+    "auth_uri": st.secrets["gcp"]["auth_uri"],
+    "token_uri": st.secrets["gcp"]["token_uri"],
+    "auth_provider_x509_cert_url": st.secrets["gcp"]["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": st.secrets["gcp"]["client_x509_cert_url"],
+    "universe_domain": st.secrets["gcp"]["universe_domain"]
+}
+
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 
 # Fetching data from Google Sheets
