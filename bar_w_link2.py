@@ -17,7 +17,7 @@ creds_dict = {
     "type": st.secrets["gcp"]["type"],
     "project_id": st.secrets["gcp"]["project_id"],
     "private_key_id": st.secrets["gcp"]["private_key_id"],
-    "private_key": st.secrets["gcp"]["private_key"].replace("\\n", "\n"),  # Replace escaped newlines with actual newlines
+    "private_key": st.secrets["gcp"]["private_key"].replace("\\n", "\n"),
     "client_email": st.secrets["gcp"]["client_email"],
     "client_id": st.secrets["gcp"]["client_id"],
     "auth_uri": st.secrets["gcp"]["auth_uri"],
@@ -39,7 +39,7 @@ data = pd.DataFrame(sheet.get_all_records())
 columns = ["KEYWORD", "Belongs to", "Rank - 19th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 filtered_data = data[columns]
 
-
+# Streamlit app layout
 st.title("Keyword Rankings Dashboard")
 
 selected_category = st.selectbox("Select a Category", options=filtered_data['Belongs to'].unique())
@@ -87,13 +87,14 @@ for i, date in enumerate(dates):
 
 fig.update_layout(
     barmode='stack' if graph_type == 'Bar' else 'overlay',
-    yaxis=dict(title='Rank'),
+    yaxis=dict(title='Rank', titlefont=dict(color='black'), tickfont=dict(color='black')),
+    xaxis=dict(title='', titlefont=dict(color='black'), tickfont=dict(color='black')),
     plot_bgcolor='white',
     paper_bgcolor='white',
     template='plotly_white',
-    height=600,  # Increase the size of the graph
+    height=600,
     width=1000,
-    font=dict(color='black')  # Set font color for the chart
+    title_font=dict(color='black')
 )
 
 st.plotly_chart(fig)
@@ -117,13 +118,14 @@ if selected_keyword:
     detailed_fig.update_layout(
         barmode='group',
         title=f'Detailed Rankings for {selected_keyword}',
-        yaxis=dict(title='Rank'),
+        yaxis=dict(title='Rank', titlefont=dict(color='black'), tickfont=dict(color='black')),
+        xaxis=dict(title='', titlefont=dict(color='black'), tickfont=dict(color='black')),
         plot_bgcolor='white',
         paper_bgcolor='white',
         template='plotly_white',
         height=400,
         width=600,
-        font=dict(color='black')  # Set font color for the detailed chart
+        title_font=dict(color='black')
     )
 
     st.plotly_chart(detailed_fig)
