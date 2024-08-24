@@ -48,6 +48,9 @@ st.markdown("""
     .markdown-text-container {
         color: #000000;  /* Text color */
     }
+    .css-1aumxhk {
+        color: #000000;  /* Text color for Streamlit elements */
+    }
     </style>
     """, unsafe_allow_html=True)
 
