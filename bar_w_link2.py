@@ -102,7 +102,8 @@ fig.update_layout(
         tickfont=dict(color='black'),
         automargin=True,  # Adjust margins to fit all labels
         tickvals=list(range(len(data_to_use['KEYWORD']))),  # Explicitly set tick values
-        ticktext=data_to_use['KEYWORD'].tolist()  # Explicitly set tick text
+        ticktext=data_to_use['KEYWORD'].tolist(),  # Explicitly set tick text
+        tickangle=-45  # Tilt x-axis labels
     ),
     plot_bgcolor='white',
     paper_bgcolor='white',
