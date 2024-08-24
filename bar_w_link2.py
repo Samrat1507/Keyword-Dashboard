@@ -60,13 +60,21 @@ fig = go.Figure()
 dates = ["Rank - 19th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 colors = px.colors.sequential.Viridis
 
+# Check if all dates exist in the data
+for date in dates:
+    if date not in data_to_use.columns:
+        st.error(f"Date column '{date}' is missing from the data.")
+        continue
+
 for i, date in enumerate(dates):
     if graph_type == 'Bar':
         fig.add_trace(go.Bar(
             x=data_to_use['KEYWORD'],
             y=data_to_use[date],
             name=date,
-            marker=dict(color=colors[i], opacity=1 - i * 0.2)
+            marker=dict(color=colors[i], opacity=1),
+            text=data_to_use[date],  # Add text for better visibility
+            textposition='auto'  # Automatically position text
         ))
     elif graph_type == 'Line':
         fig.add_trace(go.Scatter(
@@ -74,7 +82,9 @@ for i, date in enumerate(dates):
             y=data_to_use[date],
             mode='lines+markers',
             name=date,
-            line=dict(color=colors[i])
+            line=dict(color=colors[i]),
+            text=data_to_use[date],  # Add text for better visibility
+            textposition='top center'  # Automatically position text
         ))
     elif graph_type == 'Scatter':
         fig.add_trace(go.Scatter(
@@ -82,7 +92,9 @@ for i, date in enumerate(dates):
             y=data_to_use[date],
             mode='markers',
             name=date,
-            marker=dict(color=colors[i])
+            marker=dict(color=colors[i]),
+            text=data_to_use[date],  # Add text for better visibility
+            textposition='top center'  # Automatically position text
         ))
 
 fig.update_layout(
