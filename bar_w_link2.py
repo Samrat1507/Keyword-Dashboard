@@ -74,7 +74,9 @@ for i, date in enumerate(dates):
                 x=data_to_use['KEYWORD'],
                 y=data_to_use[date],
                 name=date,
-                marker=dict(color=colors[i], opacity=1)
+                marker=dict(color=colors[i], opacity=1),
+                text=data_to_use[date].apply(lambda x: '' if pd.isna(x) else x),  # Avoid "undefined" text
+                textposition='outside'
             ))
         elif graph_type == 'Line':
             fig.add_trace(go.Scatter(
@@ -82,7 +84,9 @@ for i, date in enumerate(dates):
                 y=data_to_use[date],
                 mode='lines+markers',
                 name=date,
-                line=dict(color=colors[i])
+                line=dict(color=colors[i]),
+                text=data_to_use[date].apply(lambda x: '' if pd.isna(x) else x),  # Avoid "undefined" text
+                textposition='top'
             ))
         elif graph_type == 'Scatter':
             fig.add_trace(go.Scatter(
@@ -90,13 +94,15 @@ for i, date in enumerate(dates):
                 y=data_to_use[date],
                 mode='markers',
                 name=date,
-                marker=dict(color=colors[i])
+                marker=dict(color=colors[i]),
+                text=data_to_use[date].apply(lambda x: '' if pd.isna(x) else x),  # Avoid "undefined" text
+                textposition='top'
             ))
 
 fig.update_layout(
     barmode='stack' if graph_type == 'Bar' else 'overlay',
     yaxis=dict(title='Rank', titlefont=dict(color='black'), tickfont=dict(color='black')),
-    xaxis=dict(title='', titlefont=dict(color='black'), tickfont=dict(color='black')),
+    xaxis=dict(title='', titlefont=dict(color='black'), tickfont=dict(color='black'), tickangle=-45),
     plot_bgcolor='white',
     paper_bgcolor='white',
     template='plotly_white',
