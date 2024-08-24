@@ -74,7 +74,10 @@ for i, date in enumerate(dates):
                 x=data_to_use['KEYWORD'],
                 y=data_to_use[date],
                 name=date,
-                marker=dict(color=colors[i], opacity=1)
+                marker=dict(color=colors[i], opacity=1),
+                text=data_to_use[date],
+                textposition='inside',
+                textfont=dict(color='black')
             ))
         elif graph_type == 'Line':
             fig.add_trace(go.Scatter(
@@ -82,7 +85,9 @@ for i, date in enumerate(dates):
                 y=data_to_use[date],
                 mode='lines+markers',
                 name=date,
-                line=dict(color=colors[i])
+                line=dict(color=colors[i]),
+                text=data_to_use[date],
+                textposition='top center'
             ))
         elif graph_type == 'Scatter':
             fig.add_trace(go.Scatter(
@@ -90,21 +95,15 @@ for i, date in enumerate(dates):
                 y=data_to_use[date],
                 mode='markers',
                 name=date,
-                marker=dict(color=colors[i])
+                marker=dict(color=colors[i]),
+                text=data_to_use[date],
+                textposition='top center'
             ))
 
 fig.update_layout(
     barmode='stack' if graph_type == 'Bar' else 'overlay',
     yaxis=dict(title='Rank', titlefont=dict(color='black'), tickfont=dict(color='black')),
-    xaxis=dict(
-        title='Keywords',
-        titlefont=dict(color='black'),
-        tickfont=dict(color='black'),
-        automargin=True,  # Adjust margins to fit all labels
-        tickvals=list(range(len(data_to_use['KEYWORD']))),  # Explicitly set tick values
-        ticktext=data_to_use['KEYWORD'].tolist(),  # Explicitly set tick text
-        tickangle=-30  # Tilt x-axis labels slightly for better spacing
-    ),
+    xaxis=dict(title='', titlefont=dict(color='black'), tickfont=dict(color='black')),
     plot_bgcolor='white',
     paper_bgcolor='white',
     template='plotly_white',
