@@ -40,6 +40,17 @@ columns = ["KEYWORD", "Belongs to", "Rank - 19th Aug", "Rank - 14th Aug", "Rank 
 filtered_data = data[columns]
 
 # Streamlit app layout
+st.markdown("""
+    <style>
+    .reportview-container {
+        background-color: #ffffff;  /* Background color */
+    }
+    .markdown-text-container {
+        color: #000000;  /* Text color */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 st.title("Keyword Rankings Dashboard")
 
 selected_category = st.selectbox("Select a Category", options=filtered_data['Belongs to'].unique())
@@ -92,7 +103,8 @@ fig.update_layout(
     paper_bgcolor='white',
     template='plotly_white',
     height=600,  # Increase the size of the graph
-    width=1000
+    width=1000,
+    font=dict(color='black')  # Set font color for the chart
 )
 
 st.plotly_chart(fig)
@@ -121,7 +133,8 @@ if selected_keyword:
         paper_bgcolor='white',
         template='plotly_white',
         height=400,
-        width=600
+        width=600,
+        font=dict(color='black')  # Set font color for the detailed chart
     )
 
     st.plotly_chart(detailed_fig)
