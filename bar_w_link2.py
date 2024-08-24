@@ -60,43 +60,45 @@ fig = go.Figure()
 dates = ["Rank - 19th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 colors = px.colors.sequential.Viridis
 
-# Check if all dates exist in the data
+# Ensure that all dates are present in the data
 for date in dates:
     if date not in data_to_use.columns:
         st.error(f"Date column '{date}' is missing from the data.")
         continue
 
+# Add traces to the figure based on selected graph type
 for i, date in enumerate(dates):
-    if graph_type == 'Bar':
-        fig.add_trace(go.Bar(
-            x=data_to_use['KEYWORD'],
-            y=data_to_use[date],
-            name=date,
-            marker=dict(color=colors[i], opacity=1),
-            text=data_to_use[date],  # Add text for better visibility
-            textposition='inside',  # Position text inside the bars
-            textfont=dict(color='black')  # Set text color to black
-        ))
-    elif graph_type == 'Line':
-        fig.add_trace(go.Scatter(
-            x=data_to_use['KEYWORD'],
-            y=data_to_use[date],
-            mode='lines+markers',
-            name=date,
-            line=dict(color=colors[i]),
-            text=data_to_use[date],  # Add text for better visibility
-            textposition='top center'  # Automatically position text
-        ))
-    elif graph_type == 'Scatter':
-        fig.add_trace(go.Scatter(
-            x=data_to_use['KEYWORD'],
-            y=data_to_use[date],
-            mode='markers',
-            name=date,
-            marker=dict(color=colors[i]),
-            text=data_to_use[date],  # Add text for better visibility
-            textposition='top center'  # Automatically position text
-        ))
+    if date in data_to_use.columns:
+        if graph_type == 'Bar':
+            fig.add_trace(go.Bar(
+                x=data_to_use['KEYWORD'],
+                y=data_to_use[date],
+                name=date,
+                marker=dict(color=colors[i], opacity=1),
+                text=data_to_use[date],
+                textposition='inside',
+                textfont=dict(color='black')
+            ))
+        elif graph_type == 'Line':
+            fig.add_trace(go.Scatter(
+                x=data_to_use['KEYWORD'],
+                y=data_to_use[date],
+                mode='lines+markers',
+                name=date,
+                line=dict(color=colors[i]),
+                text=data_to_use[date],
+                textposition='top center'
+            ))
+        elif graph_type == 'Scatter':
+            fig.add_trace(go.Scatter(
+                x=data_to_use['KEYWORD'],
+                y=data_to_use[date],
+                mode='markers',
+                name=date,
+                marker=dict(color=colors[i]),
+                text=data_to_use[date],
+                textposition='top center'
+            ))
 
 fig.update_layout(
     barmode='stack' if graph_type == 'Bar' else 'overlay',
@@ -105,10 +107,10 @@ fig.update_layout(
     plot_bgcolor='white',
     paper_bgcolor='white',
     template='plotly_white',
-    height=600,  # Increase the size of the graph
+    height=600,
     width=1000,
     title_font=dict(color='black'),
-    legend=dict(font=dict(color='black'))  # Set the legend font color to black
+    legend=dict(font=dict(color='black'))
 )
 
 st.plotly_chart(fig)
@@ -122,12 +124,13 @@ if selected_keyword:
     detailed_fig = go.Figure()
 
     for i, date in enumerate(dates):
-        detailed_fig.add_trace(go.Bar(
-            x=[date],
-            y=detailed_data[date],
-            name=date,
-            marker=dict(color=colors[i])
-        ))
+        if date in detailed_data.columns:
+            detailed_fig.add_trace(go.Bar(
+                x=[date],
+                y=detailed_data[date],
+                name=date,
+                marker=dict(color=colors[i])
+            ))
 
     detailed_fig.update_layout(
         barmode='group',
@@ -140,7 +143,7 @@ if selected_keyword:
         height=400,
         width=600,
         title_font=dict(color='black'),
-        legend=dict(font=dict(color='black'))  # Set the legend font color to black
+        legend=dict(font=dict(color='black'))
     )
 
     st.plotly_chart(detailed_fig)
