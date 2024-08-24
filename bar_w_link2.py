@@ -92,9 +92,10 @@ fig.update_layout(
     plot_bgcolor='white',
     paper_bgcolor='white',
     template='plotly_white',
-    height=600,
+    height=600,  # Increase the size of the graph
     width=1000,
-    title_font=dict(color='black')
+    title_font=dict(color='black'),
+    legend=dict(font=dict(color='black'))  # Set the legend font color to black
 )
 
 st.plotly_chart(fig)
@@ -125,7 +126,8 @@ if selected_keyword:
         template='plotly_white',
         height=400,
         width=600,
-        title_font=dict(color='black')
+        title_font=dict(color='black'),
+        legend=dict(font=dict(color='black'))  # Set the legend font color to black
     )
 
     st.plotly_chart(detailed_fig)
