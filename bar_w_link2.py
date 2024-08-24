@@ -74,7 +74,8 @@ for i, date in enumerate(dates):
             name=date,
             marker=dict(color=colors[i], opacity=1),
             text=data_to_use[date],  # Add text for better visibility
-            textposition='auto'  # Automatically position text
+            textposition='inside',  # Position text inside the bars
+            textfont=dict(color='black')  # Set text color to black
         ))
     elif graph_type == 'Line':
         fig.add_trace(go.Scatter(
