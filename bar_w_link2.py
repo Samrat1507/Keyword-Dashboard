@@ -36,7 +36,7 @@ sheet = spreadsheet.get_worksheet(0)
 data = pd.DataFrame(sheet.get_all_records())
 
 # Filter data based on required columns
-columns = ["KEYWORD", "Belongs to", "Rank - 26th Aug","Rank - 19th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
+columns = ["KEYWORD", "Belongs to", "Rank - 26th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 filtered_data = data[columns]
 
 # Streamlit app layout
@@ -57,7 +57,7 @@ if selected_category:
 st.markdown(f"### Rankings for {selected_category or 'All Categories'}")
 
 fig = go.Figure()
-dates = ["Rank - 26th Aug","Rank - 19th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
+dates = ["Rank - 26th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 colors = px.colors.sequential.Viridis
 
 # Ensure that all dates are present in the data
