@@ -1,42 +1,17 @@
-import os
-import gspread
 import pandas as pd
-import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from oauth2client.service_account import ServiceAccountCredentials
 import streamlit as st
 import base64
 
-# Google Sheets API setup
-scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
-         "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+# Google Sheets public URL
+sheet_url = "https://docs.google.com/spreadsheets/d/1pha0SHJoXGSRZ9bSuMPu4D4ISZiKtCc5EG0pJ8qLW7w/export?format=csv&gid=164371720"
 
-# Retrieve credentials from Streamlit secrets
-creds_dict = {
-    "type": st.secrets["gcp"]["type"],
-    "project_id": st.secrets["gcp"]["project_id"],
-    "private_key_id": st.secrets["gcp"]["private_key_id"],
-    "private_key": st.secrets["gcp"]["private_key"].replace("\\n", "\n"),
-    "client_email": st.secrets["gcp"]["client_email"],
-    "client_id": st.secrets["gcp"]["client_id"],
-    "auth_uri": st.secrets["gcp"]["auth_uri"],
-    "token_uri": st.secrets["gcp"]["token_uri"],
-    "auth_provider_x509_cert_url": st.secrets["gcp"]["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": st.secrets["gcp"]["client_x509_cert_url"],
-    "universe_domain": st.secrets["gcp"]["universe_domain"]
-}
-
-creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
-client = gspread.authorize(creds)
-
-# Fetching data from Google Sheets
-spreadsheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1RkARFZeSAL79kjdE9muNTdZZkf4xsVmQW3geUV_rqsQ/edit?gid=0#gid=0")
-sheet = spreadsheet.get_worksheet(0)
-data = pd.DataFrame(sheet.get_all_records())
+# Fetching data from Google Sheets directly using pandas
+data = pd.read_csv(sheet_url)
 
 # Filter data based on required columns
-columns = ["KEYWORD", "Belongs to", "Rank - 9th September","Rank - 2nd September","Rank - 26th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
+columns = ["KEYWORD", "Belongs to", "Rank - 9th September", "Rank - 2nd September", "Rank - 26th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 filtered_data = data[columns]
 
 # Streamlit app layout
@@ -57,7 +32,7 @@ if selected_category:
 st.markdown(f"### Rankings for {selected_category or 'All Categories'}")
 
 fig = go.Figure()
-dates = ["Rank - 9th September","Rank - 2nd September","Rank - 26th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
+dates = ["Rank - 9th September", "Rank - 2nd September", "Rank - 26th Aug", "Rank - 14th Aug", "Rank - 13th Aug", "Rank - 12th Aug", "Rank - 5th Aug", "Rank - 22nd July"]
 colors = px.colors.sequential.Viridis
 
 # Ensure that all dates are present in the data
@@ -148,6 +123,7 @@ if selected_keyword:
 
     st.plotly_chart(detailed_fig)
 
+# Export filtered data to CSV
 if st.button("Export to CSV"):
     csv = data_to_use.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
