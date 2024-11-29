@@ -32,7 +32,7 @@ This project is an interactive, data-driven dashboard built using Python, Dash, 
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/keyword-ranking-dashboard.git
+   https://github.com/Samrat1507/Keyword-Dashboard.git
    cd keyword-ranking-dashboard
    ```
 
