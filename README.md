@@ -33,7 +33,7 @@ This project is an interactive, data-driven dashboard built using Python, Dash, 
 1. **Clone the Repository**:
    ```bash
    https://github.com/Samrat1507/Keyword-Dashboard.git
-   cd keyword-ranking-dashboard
+   cd Keyword-Dashboard
    ```
 
 2. **Set Up Google Cloud Service Account**:
